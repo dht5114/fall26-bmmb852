@@ -1,7 +1,7 @@
 # Week 01 - Setting up the computer and learning the command line
 
 I set up my computer following the Biostar Handbook instructions and created
-the `bioinfo` conda environment. For my editor I use VS Code
+the `bioinfo` conda environment. For my editor I use VS Code/nano
 with the Claude Code extension.
 
 ## 1. samtools version in the `bioinfo` environment
