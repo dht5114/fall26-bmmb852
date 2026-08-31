@@ -1,4 +1,4 @@
-# Week 01 ??? Setting up the computer and learning the command line
+# Week 01 - Setting up the computer and learning the command line
 
 I set up my computer following the Biostar Handbook instructions and created
 the `bioinfo` conda environment. For my editor I use VS Code
@@ -97,7 +97,7 @@ pwd
 /Users/dorotheatse/fall26_bmmb852/fall26-bmmb852/week01/project
 ```
 
-Reading the same file both ways ??? relative to `week01/project`:
+Reading the same file both ways - relative to `week01/project`:
 
 ```bash
 cat data/raw/reads.txt
