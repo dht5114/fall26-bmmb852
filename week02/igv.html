@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>RSV genome - igv.js</title>
+  <style>
+    body { font-family: sans-serif; margin: 12px; background: #fff; }
+    #status { padding: 6px 10px; margin-bottom: 8px; background: #ebf8ff; border: 1px solid #90cdf4; border-radius: 4px; }
+    #status.done { background: #f0fff4; border-color: #9ae6b4; }
+  </style>
+</head>
+<body>
+  <h3>Human respiratory syncytial virus (NC_038235.1) &mdash; GCF_002815475.1</h3>
+  <div id="status">Loading IGV&hellip;</div>
+  <div id="igv"></div>
+  <script src="https://cdn.jsdelivr.net/npm/igv@3.1.4/dist/igv.min.js"></script>
+  <script>
+    const status = (msg, done) => {
+      const el = document.getElementById("status");
+      el.textContent = msg;
+      if (done) el.className = "done";
+    };
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    const options = {
+      reference: {
+        id: "RSV_A",
+        name: "RSV (NC_038235.1)",
+        fastaURL: "/fasta/GCF_002815475.1_ASM281547v1_genomic.fna",
+        indexed: false
+      },
+      locus: "NC_038235.1",
+      tracks: [
+        {
+          name: "RefSeq annotation (colored by strand)",
+          type: "annotation",
+          format: "gff3",
+          url: "/gff/GCF_002815475.1_ASM281547v1_genomic.gff",
+          indexed: false,
+          displayMode: "EXPANDED",
+          height: 180,
+          filterTypes: ["region", "biological_region"],
+          // color features by strand orientation: blue = forward, red = reverse
+          color: (f) => f.strand === "-" ? "#c53030" : "#2b6cb0"
+        }
+      ]
+    };
+
+    const save = async (name) => {
+      const svg = window.igvBrowser.toSVG();
+      const r = await fetch("/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name, svg: svg })
+      });
+      return r.status;
+    };
+    window.saveSnapshot = save;
+
+    igv.createBrowser(document.getElementById("igv"), options).then(async (b) => {
+      window.igvBrowser = b;
+      try {
+        status("Capturing whole-genome snapshots…");
+        await sleep(1500);
+        await save("overview.svg");
+        await save("strand_colors.svg");
+
+        status("Zooming to NC_038235.1:1,985-2,015…");
+        await b.search("NC_038235.1:1985-2015");
+        // turn on three-frame translation on the sequence track
+        const tv = b.trackViews.find(t => t.track && t.track.type === "sequence");
+        if (tv) {
+          tv.track.frameTranslation = true;
+          try { tv.setTrackHeight(115, true); } catch (e) {}
+          try { tv.repaintViews(); } catch (e) {}
+        }
+        await sleep(2000);
+        await save("position2000.svg");
+        status("Done - all three snapshots saved to week02/images/. You can close this pane.", true);
+      } catch (e) {
+        status("Error: " + e.message);
+      }
+    });
+  </script>
+</body>
+</html>
