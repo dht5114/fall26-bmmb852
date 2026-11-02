@@ -1,0 +1,15 @@
+run,sample,group,type,replicate,control
+SRR7767717,WT_input_1,WT,input,1,
+SRR7767718,WT_input_2,WT,input,2,
+SRR7767719,WT_input_3,WT,input,3,
+SRR7767720,WT_input_4,WT,input,4,
+SRR7767721,WT_input_5,WT,input,5,
+SRR7767710,sfp1KO_input_1,sfp1KO,input,1,
+SRR7767711,sfp1KO_input_2,sfp1KO,input,2,
+SRR7767712,WT_ChIP_1,WT,ChIP,1,WT_input_1
+SRR7767713,WT_ChIP_2,WT,ChIP,2,WT_input_2
+SRR7767714,WT_ChIP_3,WT,ChIP,3,WT_input_3
+SRR7767715,WT_ChIP_4,WT,ChIP,4,WT_input_4
+SRR7767716,WT_ChIP_5,WT,ChIP,5,WT_input_5
+SRR7767708,sfp1KO_ChIP_1,sfp1KO,ChIP,1,sfp1KO_input_1
+SRR7767709,sfp1KO_ChIP_2,sfp1KO,ChIP,2,sfp1KO_input_2
